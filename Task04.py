@@ -1,3 +1,14 @@
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return "Give me name and phone please."
+        except KeyError:
+            return "Contact not found."
+        except IndexError:
+            return "Enter the argument for the command."
+    return inner
 
 @input_error
 def add_contact(args, contacts):
@@ -36,19 +47,6 @@ def parse_input(user_input):
     cmd = parts[0].strip().lower()
     args = parts[1].split() if len(parts) > 1 else []
     return cmd, args
-
-
-def input_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ValueError:
-            return "Give me name and phone please."
-        except KeyError:
-            return "Contact not found."
-        except IndexError:
-            return "Enter the argument for the command."
-    return inner
 
 
 def main():
